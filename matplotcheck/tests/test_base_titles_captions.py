@@ -6,6 +6,14 @@ import matplotlib.pyplot as plt
 """ TITLE TESTS """
 
 
+def test_correct_title(pt_line_plt):
+    """Check that the correct plot title is grabbed from the axis object.
+    Note that get_titles maintains case."""
+
+    assert "Plot Title" in pt_line_plt.get_titles()[1]
+    plt.close()
+
+
 def test_get_titles(pt_line_plt):
     """Check that the correct plot title is grabbed from the axis object.
     Note that get_titles maintains case."""
@@ -42,7 +50,7 @@ def test_title_contains_axes(pt_line_plt):
 def test_title_contains_axes_badtext(pt_line_plt):
     """Check title_contains fails when given bad text"""
     with pytest.raises(
-        AssertionError, match="Title does not contain expected text:foo"
+        AssertionError, match="Title does not contain expected string: foo"
     ):
         pt_line_plt.assert_title_contains(
             ["Title", "foo", "bar"], title_type="axes"
@@ -89,7 +97,7 @@ def test_title_contains_both_axes_figure(pt_line_plt):
 def test_title_contains_both_axes_figure_badtext(pt_line_plt):
     """Check title_contains tester for combined titles, should fail with bad text"""
     with pytest.raises(
-        AssertionError, match="Title does not contain expected text:foo"
+        AssertionError, match="Title does not contain expected string: foo"
     ):
         pt_line_plt.assert_title_contains(
             ["My", "Figure", "Plot", "Title", "foo"], title_type="either"
@@ -102,7 +110,7 @@ def test_title_contains_both_axes_figure_badtext(pt_line_plt):
 
 def test_get_caption(pt_line_plt):
     """Make sure that get caption returns correct text string"""
-    assert "Figure Caption" == pt_line_plt.get_caption().get_text()
+    assert "Figure Caption" == pt_line_plt.get_caption()
     plt.close()
 
 
@@ -136,7 +144,7 @@ def test_assert_caption_contains_badtext(pt_line_plt):
 def test_assert_caption_contains_nocaption(pt_bar_plt):
     """Test that caption_contains fails when there is no caption"""
     with pytest.raises(
-        AssertionError, match="No caption exist in appropriate location"
+        AssertionError, match="No caption exists in appropriate location"
     ):
         pt_bar_plt.assert_caption_contains([["Figure"], ["Caption"]])
     plt.close()
